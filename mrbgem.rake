@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2017 Sebastian Katzer
+# Copyright (c) 2018 Piotr Murach, Jeremy Jung
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -20,44 +20,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-MRUBY_CONFIG  = File.expand_path(ENV['MRUBY_CONFIG'] || 'build_config.rb')
-MRUBY_VERSION = ENV['MRUBY_VERSION'] || 'head'
+MRuby::Gem::Specification.new('mruby-tty-cursor') do |spec|
+  spec.license = 'MIT'
+  spec.authors = 'Piotr Murach, Jeremy Jung'
+  spec.summary = 'Terminal cursor positioning, visibility and text manipulation.'
 
-def mtask(cmd)
-  if Gem.win_platform?
-    Dir.chdir('mruby') do
-      sh "set MRUBY_CONFIG=#{MRUBY_CONFIG} && ruby .\\minirake #{cmd}"
-    end
-  else
-    sh "cd mruby && MRUBY_CONFIG=#{MRUBY_CONFIG} ruby ./minirake #{cmd}"
-  end
-end
-
-file :mruby do
-  if MRUBY_VERSION == 'head'
-    sh 'git clone --depth 1 git://github.com/mruby/mruby.git'
-  else
-    sh "wget -qO- https://github.com/mruby/mruby/archive/1.3.0.tar.gz | tar zxf -"
-    mv "mruby-#{MRUBY_VERSION}", 'mruby'
-  end
-end
-
-desc 'compile binary'
-task compile: :mruby do
-  mtask 'all'
-end
-
-desc 'test'
-task test: :mruby do
-  mtask 'test'
-end
-
-desc 'cleanup'
-task :clean do
-  mtask 'clean'
-end
-
-desc 'deep cleanup'
-task :cleanall do
-  mtask 'deep_clean'
+  spec.add_dependency 'mruby-os'
+  spec.add_dependency 'mruby-array-ext'
+  spec.add_dependency 'mruby-stringio'
 end

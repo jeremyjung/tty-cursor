@@ -1,40 +1,22 @@
-# TTY::Cursor [![Gitter](https://badges.gitter.im/Join%20Chat.svg)][gitter]
-[![Gem Version](https://badge.fury.io/rb/tty-cursor.svg)][gem]
-[![Build Status](https://secure.travis-ci.org/piotrmurach/tty-cursor.svg?branch=master)][travis]
-[![Build status](https://ci.appveyor.com/api/projects/status/4k7cd69jscwg7fl7?svg=true)][appveyor]
-[![Code Climate](https://codeclimate.com/github/piotrmurach/tty-cursor/badges/gpa.svg)][codeclimate]
-[![Coverage Status](https://coveralls.io/repos/piotrmurach/tty-cursor/badge.svg)][coverage]
-[![Inline docs](http://inch-ci.org/github/piotrmurach/tty-cursor.svg?branch=master)][inchpages]
-
-[gitter]: https://gitter.im/piotrmurach/tty
-[gem]: http://badge.fury.io/rb/tty-cursor
-[travis]: http://travis-ci.org/piotrmurach/tty-cursor
-[appveyor]: https://ci.appveyor.com/project/piotrmurach/tty-cursor
-[codeclimate]: https://codeclimate.com/github/piotrmurach/tty-cursor
-[coverage]: https://coveralls.io/r/piotrmurach/tty-cursor
-[inchpages]: http://inch-ci.org/github/piotrmurach/tty-cursor
+# TTY::Cursor
 
 > Terminal cursor positioning, visibility and text manipulation.
 
+This is a port of Piotr Murach's [TTY::Cursor](https://github.com/piotrmurach/tty-cursor) from ruby to mruby.
+
 The purpose of this library is to help move the terminal cursor around and manipulate text by using intuitive method calls.
 
-**TTY::Cursor** provides independent cursor movement component for [TTY](https://github.com/piotrmurach/tty) toolkit.
+## Prerequisites:
 
-## Installation
+gcc or clang, bison, and ruby.
 
-Add this line to your application's Gemfile:
+By default, the `build_config.rb` will attempt to use clang unless you are on windows.
 
-```ruby
-gem 'tty-cursor'
-```
+## Try it out
 
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install tty-cursor
+1. `rake compile` to compile mruby with **TTY:Cursor** modules included
+2. `mruby/bin/mirb` to start the mruby interactive shell
+3. Try the commands in the usage section
 
 ## Contents
 
@@ -226,16 +208,34 @@ Erase the screen from the current line down to the bottom of the screen.
 
 Erase the screen from the current line up to the top of the screen.
 
+## Add to your mruby project
+
+Add this line to your application's mrbgem.rake file:
+```ruby
+spec.add_dependency 'mruby-tty-cursor', github: 'jeremyjung/mruby-tty-cursor'
+```
+
+## Developing on Windows
+
+Windows does not include any of the mruby dependencies (ruby, gcc, bison) so they'll need to be installed.
+
+1.  Install [rubyinstaller 2.4.3-2 \(x64\)](https://rubyinstaller.org/downloads/)
+2.  When the MSYS2 command prompt appears, hit enter to install default toolchain
+3.  After installation is complete, open a terminal and go to the mruby-tty-screen directory
+4.  Run `ridk enable`
+5.  Run `pacman -S bison`
+6.  Run `rake compile`
+
+Note that any time you open a terminal, you must run `ridk enable` before attempting to run `rake compile` in Windows or the compilation will fail.
+
 ## Contributing
 
-1. Fork it ( https://github.com/piotrmurach/tty-cursor/fork )
+1. Fork it ( https://github.com/jeremyjung/mruby-tty-cursor/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
 
-This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
-
 ## Copyright
 
-Copyright (c) 2015-2017 Piotr Murach. See LICENSE for further details.
+Copyright (c) 2015-2018 Piotr Murach. See LICENSE for further details.
